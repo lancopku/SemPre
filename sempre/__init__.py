@@ -247,15 +247,30 @@ from fairseq.data.encoders.gpt2_bpe import GPT2BPE
 
 def gpt2bpe_decode(self, x: str) -> str:
     """
-    backports to 0.9.0
-    we don't actually need this because those two tokens shouldn't be in our raw texts
+    look out for special tokens
     """
     return self.bpe.decode(
-        [int(tok) if tok not in {"<unk>", "<mask>"} else tok for tok in x.split()]
+        [
+            int(tok) if tok not in {"<s>", "<unk>", "</s>", "<mask>"} else tok
+            for tok in x.split()
+        ]
     )
 
 
 GPT2BPE.decode = gpt2bpe_decode
+
+from fairseq.data.encoders.gpt2_bpe_utils import Encoder
+
+
+def encoder_decode(self, tokens):
+    text = "".join([self.decoder.get(token, token) for token in tokens])
+    text = bytearray([self.byte_decoder[c] for c in text]).decode(
+        "utf-8", errors=self.errors
+    )
+    return text
+
+
+Encoder.decode = encoder_decode
 
 
 """

@@ -19,7 +19,7 @@
 # GPU=6,7 NUM_GPU=2 PORT=29503 CUSTOM_ID="maskdef" ARGS="--fp16 --fp16-init-scale 1 --no-masking-target-word" MODEL=checkpoints/roberta-large DATA_ROOT=data-bin DATA=bookcorpus_all ARCH=roberta_large MAX_EPOCH=10 WARMUP_UPDATES=295 MAX_SENTENCES=4 UPDATE_FREQ=256 TOKENS_PER_SAMPLE=256 MAX_POSITIONS=256
 
 eval "$(conda shell.bash hook)"
-conda activate
+conda activate sempre
 
 # required
 MODEL=${MODEL:-"checkpoints/roberta.base/model"}
@@ -100,7 +100,7 @@ echo "running extra args: $ARGS"
 
 if [[ -f "$CHECKPOINT_ROOT/checkpoint_last.pt" ]]; then
     # continue training
-    if [[ $USE_LAMB -eq 0 ]]
+    if [[ $USE_LAMB -eq 0 ]]; then
         CUDA_VISIBLE_DEVICES=$GPU $CMD "$DATA_ROOT/$DATA" \
             $ARGS \
             --required-batch-size-multiple 2 \

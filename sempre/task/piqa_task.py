@@ -171,9 +171,6 @@ class PIQATask(FairseqTask):
                 decode(src_tokens[1][ind])
                 print()
 
-        with data_utils.numpy_seed(self.args.seed + epoch):
-            shuffle = np.random.permutation(len(src_tokens[0]))
-
         dataset = {
             "id": IdDataset(),
             "nsentences": NumSamplesDataset(),
@@ -209,6 +206,12 @@ class PIQATask(FairseqTask):
         if self.args.no_shuffle:
             dataset = nested_dataset
         else:
+            # the dataset is only loaded once in train, i.e., dataset is shuffled
+            # once, and then the minibatches are built. the examples in a
+            # minibatch are fixed. train iterator shuffles minibatches not the
+            # data in the minibatches
+            with data_utils.numpy_seed(self.args.seed + epoch):
+                shuffle = np.random.permutation(len(src_tokens[0]))
             dataset = SortDataset(nested_dataset, sort_order=[shuffle])
 
         print(f"| Loaded {split} with {len(dataset)} samples")

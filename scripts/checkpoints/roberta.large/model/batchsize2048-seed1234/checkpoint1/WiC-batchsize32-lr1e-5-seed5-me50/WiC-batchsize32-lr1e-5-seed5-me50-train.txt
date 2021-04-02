@@ -1,0 +1,366 @@
+Namespace(activation_dropout=0.0, activation_fn='gelu', adam_betas='(0.9, 0.98)', adam_eps=1e-06, arch='roberta_large', attention_dropout=0.1, best_checkpoint_metric='accuracy', bpe='gpt2', bucket_cap_mb=25, classification_head_name='sentence_classification_head', clip_norm=0.0, cpu=False, criterion='wic', curriculum=0, data='data-raw/WiC/', dataset_impl=None, ddp_backend='c10d', device_id=0, disable_validation=False, distributed_backend='nccl', distributed_init_method=None, distributed_no_spawn=False, distributed_port=-1, distributed_rank=0, distributed_world_size=1, dropout=0.1, empty_cache_freq=0, encoder_attention_heads=16, encoder_embed_dim=1024, encoder_ffn_embed_dim=4096, encoder_layerdrop=0, encoder_layers=24, encoder_layers_to_keep=None, end_learning_rate=0.0, fast_stat_sync=False, find_unused_parameters=True, fix_batches_to_gpus=False, fixed_validation_seed=None, force_anneal=None, fp16=True, fp16_init_scale=1, fp16_scale_tolerance=0.0, fp16_scale_window=None, gpt2_encoder_json='https://dl.fbaipublicfiles.com/fairseq/gpt2_bpe/encoder.json', gpt2_vocab_bpe='https://dl.fbaipublicfiles.com/fairseq/gpt2_bpe/vocab.bpe', init_token='<s>', inspect_data=False, keep_interval_updates=-1, keep_last_epochs=-1, log_format=None, log_interval=1000, lr=[1e-05], lr_scheduler='polynomial_decay', max_epoch=50, max_positions=128, max_sentences=16, max_sentences_valid=16, max_tokens=4400, max_tokens_valid=4400, max_update=0, maximize_best_checkpoint_metric=True, memory_efficient_fp16=False, min_loss_scale=0.0001, min_lr=-1, no_epoch_checkpoints=True, no_last_checkpoints=True, no_progress_bar=False, no_save=False, no_save_optimizer_state=True, no_shuffle=False, num_workers=1, optimizer='adam', optimizer_overrides='{}', patience=5, pooler_activation_fn='tanh', pooler_dropout=0.0, power=1.0, required_batch_size_multiple=4, reset_dataloader=True, reset_lr_scheduler=False, reset_meters=True, reset_optimizer=True, restore_file='checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1.pt', save_dir='checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/WiC-batchsize32-lr1e-5-seed5-me50', save_interval=1, save_interval_updates=0, seed=5, sentence_avg=False, separator_token='</s>', skip_invalid_size_inputs_valid_test=True, task='wic', tensorboard_logdir='', threshold_loss_scale=None, tokenizer=None, total_num_update=8500, train_subset='train', truncate_sequence=False, update_freq=[2], use_bmuf=False, user_dir='../sempre', valid_subset='val', validate_interval=1, warmup_updates=850, weight_decay=0.1)
+| dictionary: 50264 types
+| init <s> (0) | sep </s> (2) 
+| Loaded val with 638 samples
+RobertaModel(
+  (decoder): RobertaEncoder(
+    (sentence_encoder): TransformerSentenceEncoder(
+      (embed_tokens): Embedding(50264, 1024, padding_idx=1)
+      (embed_positions): LearnedPositionalEmbedding(130, 1024, padding_idx=1)
+      (layers): ModuleList(
+        (0): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (1): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (2): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (3): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (4): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (5): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (6): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (7): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (8): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (9): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (10): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (11): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (12): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (13): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (14): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (15): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (16): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (17): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (18): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (19): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (20): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (21): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (22): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (23): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+      )
+      (emb_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (classification_heads): ModuleDict(
+    (sentence_classification_head): RobertaClassificationHead(
+      (dense): Linear(in_features=3072, out_features=1024, bias=True)
+      (dropout): Dropout(p=0.0, inplace=False)
+      (out_proj): Linear(in_features=1024, out_features=2, bias=True)
+    )
+  )
+)
+| model roberta_large, criterion WiCCriterion
+| num. model params: 357063682 (num. trained: 357063682)
+| training on 1 GPUs
+| max tokens per GPU = 4400 and max sentences per GPU = 16
+WARNING: decoder.sentence_encoder.embed_tokens.weight size mismatch, truncate torch.Size([50272, 1024]) -> torch.Size([50264, 1024])
+WARNING: decoder.sentence_encoder.embed_positions.weight size mismatch, truncate torch.Size([136, 1024]) -> torch.Size([130, 1024])
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.dense.weight
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.dense.bias
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.out_proj.weight
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.out_proj.bias
+WARNING: deleting lm head (decoder.lm_head.weight) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.bias) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.dense.weight) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.dense.bias) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.layer_norm.weight) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.layer_norm.bias) from checkpoint
+Overwriting classification_heads.sentence_classification_head.dense.weight
+Overwriting classification_heads.sentence_classification_head.dense.bias
+Overwriting classification_heads.sentence_classification_head.out_proj.weight
+Overwriting classification_heads.sentence_classification_head.out_proj.bias
+| loaded checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1.pt (epoch 1 @ 0 updates)
+| loading train data for epoch 0
+| Loaded train with 5428 samples
+| epoch 001 | loss 0.986 | ppl 1.98 | wps 3279 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 170 | lr 2e-06 | gnorm 6.793 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 39 | train_wall 36 | accuracy 0.546979
+| epoch 001 | valid on 'val' subset | loss 0.918 | ppl 1.89 | num_updates 170 | accuracy 0.645759
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/WiC-batchsize32-lr1e-5-seed5-me50/checkpoint_best.pt (epoch 1 @ 170 updates) (writing took 0.5040354550001211 seconds)
+| epoch 002 | loss 0.852 | ppl 1.81 | wps 3241 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 340 | lr 4e-06 | gnorm 14.698 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 77 | train_wall 71 | accuracy 0.691783
+| epoch 002 | valid on 'val' subset | loss 0.875 | ppl 1.83 | num_updates 340 | best_accuracy 0.679018 | accuracy 0.679018
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/WiC-batchsize32-lr1e-5-seed5-me50/checkpoint_best.pt (epoch 2 @ 340 updates) (writing took 3.4721358910028357 seconds)
+| epoch 003 | loss 0.697 | ppl 1.62 | wps 3229 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 510 | lr 6e-06 | gnorm 16.010 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 118 | train_wall 106 | accuracy 0.766765
+| epoch 003 | valid on 'val' subset | loss 0.850 | ppl 1.8 | num_updates 510 | best_accuracy 0.725893 | accuracy 0.725893
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/WiC-batchsize32-lr1e-5-seed5-me50/checkpoint_best.pt (epoch 3 @ 510 updates) (writing took 3.47764061599446 seconds)
+| epoch 004 | loss 0.551 | ppl 1.47 | wps 3223 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 680 | lr 8e-06 | gnorm 18.799 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 159 | train_wall 140 | accuracy 0.832535
+| epoch 004 | valid on 'val' subset | loss 0.854 | ppl 1.81 | num_updates 680 | best_accuracy 0.74308 | accuracy 0.74308
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/WiC-batchsize32-lr1e-5-seed5-me50/checkpoint_best.pt (epoch 4 @ 680 updates) (writing took 3.5156383749999804 seconds)
+| epoch 005 | loss 0.391 | ppl 1.31 | wps 3252 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 850 | lr 1e-05 | gnorm 20.776 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 200 | train_wall 175 | accuracy 0.892594
+| epoch 005 | valid on 'val' subset | loss 1.354 | ppl 2.56 | num_updates 850 | best_accuracy 0.74308 | accuracy 0.658929
+| epoch 006 | loss 0.243 | ppl 1.18 | wps 3297 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 1020 | lr 9.77778e-06 | gnorm 19.908 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 237 | train_wall 209 | accuracy 0.935151
+| epoch 006 | valid on 'val' subset | loss 1.382 | ppl 2.61 | num_updates 1020 | best_accuracy 0.74308 | accuracy 0.699554
+| epoch 007 | loss 0.146 | ppl 1.11 | wps 3291 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 1190 | lr 9.55556e-06 | gnorm 18.217 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 274 | train_wall 243 | accuracy 0.961496
+| epoch 007 | valid on 'val' subset | loss 1.388 | ppl 2.62 | num_updates 1190 | best_accuracy 0.75558 | accuracy 0.75558
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/WiC-batchsize32-lr1e-5-seed5-me50/checkpoint_best.pt (epoch 7 @ 1190 updates) (writing took 3.875531780999154 seconds)
+| epoch 008 | loss 0.085 | ppl 1.06 | wps 3216 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 1360 | lr 9.33333e-06 | gnorm 14.747 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 315 | train_wall 279 | accuracy 0.979366
+| epoch 008 | valid on 'val' subset | loss 2.083 | ppl 4.24 | num_updates 1360 | best_accuracy 0.75558 | accuracy 0.71183
+| epoch 009 | loss 0.075 | ppl 1.05 | wps 3221 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 1530 | lr 9.11111e-06 | gnorm 15.238 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 353 | train_wall 314 | accuracy 0.981024
+| epoch 009 | valid on 'val' subset | loss 2.218 | ppl 4.65 | num_updates 1530 | best_accuracy 0.75558 | accuracy 0.710045
+| epoch 010 | loss 0.055 | ppl 1.04 | wps 3280 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 1700 | lr 8.88889e-06 | gnorm 12.709 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 390 | train_wall 348 | accuracy 0.987288
+| epoch 010 | valid on 'val' subset | loss 1.959 | ppl 3.89 | num_updates 1700 | best_accuracy 0.75558 | accuracy 0.71183
+| epoch 011 | loss 0.045 | ppl 1.03 | wps 3330 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 1870 | lr 8.66667e-06 | gnorm 11.760 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 427 | train_wall 381 | accuracy 0.990236
+| epoch 011 | valid on 'val' subset | loss 2.022 | ppl 4.06 | num_updates 1870 | best_accuracy 0.75558 | accuracy 0.720982
+| epoch 012 | loss 0.053 | ppl 1.04 | wps 3361 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 2040 | lr 8.44444e-06 | gnorm 12.775 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 463 | train_wall 415 | accuracy 0.98692
+| epoch 012 | valid on 'val' subset | loss 2.936 | ppl 7.65 | num_updates 2040 | best_accuracy 0.75558 | accuracy 0.685268
+| epoch 013 | loss 0.032 | ppl 1.02 | wps 3289 | ups 5 | wpb 690.053 | bsz 31.929 | num_updates 2210 | lr 8.22222e-06 | gnorm 8.444 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 500 | train_wall 449 | accuracy 0.992815
+| epoch 013 | valid on 'val' subset | loss 2.112 | ppl 4.32 | num_updates 2210 | best_accuracy 0.75558 | accuracy 0.719196
+| early stop since valid performance hasn't improved for last 5 runs
+| done training in 499.5 seconds

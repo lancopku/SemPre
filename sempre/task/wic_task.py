@@ -83,7 +83,6 @@ class WiCTask(DynamicShuffleMixin, FairseqTask):
     def load_dataset(
         self, split, epoch=0, combine=False, data_path=None, return_only=False, **kwargs
     ):
-
         if data_path is None:
             data_path = os.path.join(self.args.data, split + ".jsonl")
         if not os.path.exists(data_path):
@@ -225,7 +224,9 @@ class WiCTask(DynamicShuffleMixin, FairseqTask):
         if self.args.no_shuffle:
             dataset = nested_dataset
         else:
-            dataset = DynamicShuffleDataset(nested_dataset, self.args.seed, epoch)
+            # see scripts/train.py
+            # load_dataset is only called once in training
+            dataset = DynamicShuffleDataset(nested_dataset, self.args.seed)
 
         print(f"| Loaded {split} with {len(dataset)} samples")
         if not return_only:
@@ -251,13 +252,15 @@ class WiCTask(DynamicShuffleMixin, FairseqTask):
             args.pooler_activation_fn,
             args.pooler_dropout,
         )
-        apply_bert_init(
-            model.classification_heads[
-                getattr(
-                    args, "classification_head_name", "sentence_classification_head"
-                )
-            ]
-        )
+
+        # the input dim is way larger, don't apply bert init
+        # apply_bert_init(
+        #     model.classification_heads[
+        #         getattr(
+        #             args, "classification_head_name", "sentence_classification_head"
+        #         )
+        #     ]
+        # )
 
         return model
 

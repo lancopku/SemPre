@@ -4,8 +4,9 @@ import os
 import sys
 
 import numpy as np
-import scipy.stats
-import sklearn.metrics
+
+# import scipy.stats
+# import sklearn.metrics
 import torch
 from fairseq import hub_utils, tasks, utils
 from fairseq.models.roberta import RobertaHubInterface
@@ -136,7 +137,7 @@ def roberta_predict(args, roberta, net_input):
     elif hasattr(roberta_args, "ranking_head_name"):
         head_name = roberta_args.ranking_head_name
     else:
-        head_name = "classification_head_name"
+        head_name = "sentence_classification_head"
 
     if not args.cpu:
         net_input = utils.move_to_cuda(net_input)
@@ -252,16 +253,16 @@ def validate(args, roberta):
             print(
                 f"| Accuracy {ncorrect/nsample:.6f} | Correct {ncorrect} | All {nsample}"
             )
-        elif metric == "mcc":
-            ncorrect = (ground_truth == prediction).sum()
-            mcc = sklearn.metrics.matthews_corrcoef(ground_truth, prediction)
-            print(f"| MatthewCC {mcc:.6f} | Correct {ncorrect} | All {nsample}")
-        elif metric == "pcc":
-            pcc, p = scipy.stats.pearsonr(ground_truth, prediction)
-            print(f"| PearsonCC {pcc:.6f} | p-value {p} | All {nsample}")
-        elif metric == "scc":
-            scc, p = scipy.stats.spearmanr(ground_truth, prediction)
-            print(f"| SpearmanCC {scc:.6f} | p-value {p} | All {nsample}")
+        # elif metric == "mcc":
+        #     ncorrect = (ground_truth == prediction).sum()
+        #     mcc = sklearn.metrics.matthews_corrcoef(ground_truth, prediction)
+        #     print(f"| MatthewCC {mcc:.6f} | Correct {ncorrect} | All {nsample}")
+        # elif metric == "pcc":
+        #     pcc, p = scipy.stats.pearsonr(ground_truth, prediction)
+        #     print(f"| PearsonCC {pcc:.6f} | p-value {p} | All {nsample}")
+        # elif metric == "scc":
+        #     scc, p = scipy.stats.spearmanr(ground_truth, prediction)
+        #     print(f"| SpearmanCC {scc:.6f} | p-value {p} | All {nsample}")
         elif metric == "f1":
             # this is a little tricky
             # in preprocessing, label mapping is based on frequency, meaning label 0 could have index 1
@@ -496,8 +497,8 @@ def test_jsonl(args, roberta):
                 embedding = hiddens.gather(dim=1, index=index) * mask
                 embedding = embedding.sum(dim=1) / mask.sum(dim=1)
                 embeddings.append(embedding)
-
-            ctx_emb = hiddens.gather(dim=1, index=index)
+            # ctx_emb = hiddens.gather(dim=1, index=index)
+            ctx_emb = embeddings
             concat = torch.cat(ctx_emb, dim=1)
             logits = roberta.model.classification_heads["sentence_classification_head"](
                 concat.unsqueeze(1)

@@ -72,7 +72,7 @@ echo "running extra args: $ARGS"
 if [[ -v CONDA_SHLVL ]]; then
     if [[ $CONDA_SHLVL -eq 0 ]]; then
         eval "$(conda shell.bash hook)"
-        conda activate
+        conda activate sempre
         if [[ $? -eq 0 ]]; then
             echo "activated conda"
         else
@@ -168,7 +168,7 @@ do_test() {
         return 1
     fi
 
-    if [[ ! -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]]; then
+    if [[ ! -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]] || [[ $(stat -c%s "${CHECKPOINT_ROOT}/${TASK}.jsonl") -eq 0 ]]; then
         # not tested
         if [[ ! -z "$USER_DIR" ]]; then
             VALID_ARGS="$VALID_ARGS --user-dir $USER_DIR"
@@ -195,35 +195,35 @@ if [[ -f "${CHECKPOINT_ROOT}/checkpoint_best.pt" ]]; then
     do_validate $VAL_SUBSET
     do_test $TEST_SUBSET
 
-    SHOULD_REMOVE=1
+    #SHOULD_REMOVE=1
     # valdiation fail
     if [[ -f "$CHECKPOINT_ROOT/${ID}-val.txt" ]]; then
         grep "done" "$CHECKPOINT_ROOT/${ID}-val.txt"
-        if [[ $? -ne 0 ]]; then
-            SHOULD_REMOVE=0
-        fi
-    else
-        SHOULD_REMOVE=0
+        # if [[ $? -ne 0 ]]; then
+        #     SHOULD_REMOVE=0
+        # fi
+    # else
+    #     SHOULD_REMOVE=0
     fi
 
-    if [[ -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]]; then
+    # if [[ -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]]; then
 
-        SIZE=$(stat -c%s "${CHECKPOINT_ROOT}/${TASK}.jsonl")
-        if [[ $SIZE -eq 0 ]]; then
-            SHOULD_REMOVE=0
-        fi
-    fi
+        # SIZE=$(stat -c%s "${CHECKPOINT_ROOT}/${TASK}.jsonl")
+        # if [[ $SIZE -eq 0 ]]; then
+        #     SHOULD_REMOVE=0
+        # fi
+    # fi
 
-    if [[ SHOULD_REMOVE -eq 1 ]]; then
-        rm $CHECKPOINT_ROOT/checkpoint_best.pt
-    fi
+    # if [[ SHOULD_REMOVE -eq 1 ]]; then
+    #     rm $CHECKPOINT_ROOT/checkpoint_best.pt
+    # fi
 
 fi
 
 # deactivate conda if activated
-if [[ -v CONDA_SHLVL ]]; then
-    if [[ $CONDA_SHLVL -eq 1 ]]; then
-        conda deactivate
-        echo "deactivated conda"
-    fi
-fi
+# if [[ -v CONDA_SHLVL ]]; then
+#     if [[ $CONDA_SHLVL -eq 1 ]]; then
+#         conda deactivate
+#         echo "deactivated conda"
+#     fi
+# fi

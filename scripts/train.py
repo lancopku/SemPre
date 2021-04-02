@@ -31,8 +31,46 @@ def options_add_checkpoint_args(parser):
     """
     Monkey patch: backport early stop
     """
-    group = options.add_checkpoint_args(parser)
+
+    group = parser.add_argument_group("Checkpointing")
     # fmt: off
+    # from fariseq
+    group.add_argument('--save-dir', metavar='DIR', default='checkpoints',
+                       help='path to save checkpoints')
+    group.add_argument('--restore-file', default='checkpoint_last.pt',
+                       help='filename from which to load checkpoint '
+                            '(default: <save-dir>/checkpoint_last.pt')
+    group.add_argument('--reset-dataloader', action='store_true',
+                       help='if set, does not reload dataloader state from the checkpoint')
+    group.add_argument('--reset-lr-scheduler', action='store_true',
+                       help='if set, does not load lr scheduler state from the checkpoint')
+    group.add_argument('--reset-meters', action='store_true',
+                       help='if set, does not load meters from the checkpoint')
+    group.add_argument('--reset-optimizer', action='store_true',
+                       help='if set, does not load optimizer state from the checkpoint')
+    group.add_argument('--optimizer-overrides', default="{}", type=str, metavar='DICT',
+                       help='a dictionary used to override optimizer args when loading a checkpoint')
+    group.add_argument('--save-interval', type=int, default=1, metavar='N',
+                       help='save a checkpoint every N epochs')
+    group.add_argument('--save-interval-updates', type=int, default=0, metavar='N',
+                       help='save a checkpoint (and validate) every N updates')
+    group.add_argument('--keep-interval-updates', type=int, default=-1, metavar='N',
+                       help='keep the last N checkpoints saved with --save-interval-updates')
+    group.add_argument('--keep-last-epochs', type=int, default=-1, metavar='N',
+                       help='keep last N epoch checkpoints')
+    group.add_argument('--no-save', action='store_true',
+                       help='don\'t save models or checkpoints')
+    group.add_argument('--no-epoch-checkpoints', action='store_true',
+                       help='only store last and best checkpoints')
+    group.add_argument('--no-last-checkpoints', action='store_true',
+                       help='don\'t store last checkpoints')
+    group.add_argument('--no-save-optimizer-state', action='store_true',
+                       help='don\'t save optimizer-state as part of checkpoint')
+    group.add_argument('--best-checkpoint-metric', type=str, default='loss',
+                       help='metric to use for saving "best" checkpoints')
+    group.add_argument('--maximize-best-checkpoint-metric', action='store_true',
+                       help='select the largest metric value for saving "best" checkpoints')
+    # added
     group.add_argument('--patience', type=int, default=-1, metavar='N',
                        help=('early stop training if valid performance doesn\'t '
                              'improve for N consecutive validation runs; note '
@@ -68,9 +106,11 @@ def main(args, init_distributed=False):
     # Setup task, e.g., translation, language modeling, etc.
     task = tasks.setup_task(args)
 
-    # Load valid dataset (we load training data below, based on the latest checkpoint)
-    for valid_sub_split in args.valid_subset.split(","):
-        task.load_dataset(valid_sub_split, combine=False, epoch=0)
+    # fix: don't load validation data if validation is disabled
+    if not args.disable_validation:
+        # Load valid dataset (we load training data below, based on the latest checkpoint)
+        for valid_sub_split in args.valid_subset.split(","):
+            task.load_dataset(valid_sub_split, combine=False, epoch=0)
 
     # Build model and criterion
     model = task.build_model(args)
@@ -140,6 +180,8 @@ def main(args, init_distributed=False):
             )
             break
         # backport early stop end
+
+        # NOTE: dataset is only reloaded when the using sharded data
         reload_dataset = ":" in getattr(args, "data", "")
         # sharded data: get train iterator for next epoch
         epoch_itr = trainer.get_train_iterator(

@@ -14,8 +14,8 @@ TASK_CMD='piqa'
 BPE="gpt2"
 INIT_TOKEN="<s>"
 SEP_TOKEN="</s>"
-VAL_SUBSET="val"
-TEST_SUBSET="test"
+VAL_SUBSET="valid"
+TEST_SUBSET="tests"
 CRITERION='sentence_ranking'
 DATA_ROOT="data-raw/PIQA/"
 
@@ -27,8 +27,8 @@ LR=${LR:-1e-5}
 MAX_EPOCH=${MAX_EPOCH:-50}
 TOTAL_NUM_UPDATES=${TOTAL_NUM_UPDATES:-25200}
 WARMUP_UPDATES=${WARMUP_UPDATES:-2520}
-MAX_SENTENCES=${MAX_SENTENCES:-8}
-UPDATE_FREQ=${UPDATE_FREQ:-4}
+MAX_SENTENCES=${MAX_SENTENCES:-4}
+UPDATE_FREQ=${UPDATE_FREQ:-8}
 SEED=${SEED:-9100}
 ACT=${ACT:-"tanh"}
 PATIENCE=${PATIENCE:-10}
@@ -121,14 +121,20 @@ do_validate() {
     local VALID_ARGS=""
     local SUBSET=""
 
-    if [[ $SPLIT == 'val' ]]; then
-        SUBSET=$VAL_SUBSET
-    elif [[ $SPLIT == 'test' ]]; then
-        SUBSET=$TEST_SUBSET
-    else
+    if [[ ! -f ${DATA_ROOT}${SPLIT}.jsonl ]]; then
         echo "validate: ${SPLIT} split not found"
-        return 1
+    else
+        SUBSET=$SPLIT
     fi
+
+    # if [[ $SPLIT == 'val' ]]; then
+    #     SUBSET=$VAL_SUBSET
+    # elif [[ $SPLIT == 'test' ]]; then
+    #     SUBSET=$TEST_SUBSET
+    # else
+    #     echo "validate: ${SPLIT} split not found"
+    #     return 1
+    # fi
 
     grep "done" "$CHECKPOINT_ROOT/${ID}-$SPLIT.txt"
     if [[ $? -ne 0 ]]; then
@@ -169,7 +175,7 @@ do_test() {
         return 1
     fi
 
-    if [[ ! -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]]; then
+    if [[ ! -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]] || [[ $(stat -c%s "${CHECKPOINT_ROOT}/${TASK}.jsonl") -eq 0 ]]; then
         # not tested
         if [[ ! -z "$USER_DIR" ]]; then
             VALID_ARGS="$VALID_ARGS --user-dir $USER_DIR"
@@ -196,35 +202,35 @@ if [[ -f "${CHECKPOINT_ROOT}/checkpoint_best.pt" ]]; then
     do_validate $VAL_SUBSET
     do_test $TEST_SUBSET
 
-    SHOULD_REMOVE=1
-    # valdiation fail
-    if [[ -f "$CHECKPOINT_ROOT/${ID}-val.txt" ]]; then
-        grep "done" "$CHECKPOINT_ROOT/${ID}-val.txt"
-        if [[ $? -ne 0 ]]; then
-            SHOULD_REMOVE=0
-        fi
-    else
-        SHOULD_REMOVE=0
-    fi
+    # SHOULD_REMOVE=1
+    # # valdiation fail
+    # if [[ -f "$CHECKPOINT_ROOT/${ID}-val.txt" ]]; then
+    #     grep "done" "$CHECKPOINT_ROOT/${ID}-val.txt"
+    #     if [[ $? -ne 0 ]]; then
+    #         SHOULD_REMOVE=0
+    #     fi
+    # else
+    #     SHOULD_REMOVE=0
+    # fi
 
-    if [[ -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]]; then
+    # if [[ -f "${CHECKPOINT_ROOT}/${TASK}.jsonl" ]]; then
 
-        SIZE=$(stat -c%s "${CHECKPOINT_ROOT}/${TASK}.jsonl")
-        if [[ $SIZE -eq 0 ]]; then
-            SHOULD_REMOVE=0
-        fi
-    fi
+    #     SIZE=$(stat -c%s "${CHECKPOINT_ROOT}/${TASK}.jsonl")
+    #     if [[ $SIZE -eq 0 ]]; then
+    #         SHOULD_REMOVE=0
+    #     fi
+    # fi
 
-    if [[ SHOULD_REMOVE -eq 1 ]]; then
-        rm $CHECKPOINT_ROOT/checkpoint_best.pt
-    fi
+    # if [[ SHOULD_REMOVE -eq 1 ]]; then
+    #     rm $CHECKPOINT_ROOT/checkpoint_best.pt
+    # fi
 
 fi
 
 # deactivate conda if activated
-if [[ -v CONDA_SHLVL ]]; then
-    if [[ $CONDA_SHLVL -eq 1 ]]; then
-        conda deactivate
-        echo "deactivated conda"
-    fi
-fi
+# if [[ -v CONDA_SHLVL ]]; then
+#     if [[ $CONDA_SHLVL -eq 1 ]]; then
+#         conda deactivate
+#         echo "deactivated conda"
+#     fi
+# fi

@@ -524,7 +524,7 @@ class MaskedDefLMTask(FairseqTask):
         # add mask token
         self.mask_idx = dictionary.add_symbol(args.mask_token, verbose=True)
 
-        # add other token
+        # add other tokens
         self.init_idx = dictionary.add_symbol(args.init_token, verbose=True)
         self.separator_idx = dictionary.add_symbol(args.separator_token, verbose=True)
         self.surround_idx = dictionary.add_symbol(args.surround_token, verbose=True)
@@ -542,6 +542,12 @@ class MaskedDefLMTask(FairseqTask):
             self.dictionary.pad_length_to_multiples(
                 padding_factor=padding_factor, verbose=True
             )
+
+        # gpt2 dictionary is padded
+        # then the <mask> token
+        # our tokens
+        # padded again
+        # all those additional will be removed from vocabulary in fine-tuning
 
         self.word_definition_dataset = None
         self.lemmas = None

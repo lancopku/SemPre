@@ -1,0 +1,447 @@
+Namespace(activation_dropout=0.0, activation_fn='gelu', adam_betas='(0.9, 0.98)', adam_eps=1e-06, arch='roberta_large', attention_dropout=0.1, best_checkpoint_metric='accuracy', bpe='gpt2', bucket_cap_mb=25, clip_norm=0.0, cpu=False, criterion='sentence_ranking', curriculum=0, data='data-raw/PIQA/', dataset_impl=None, ddp_backend='c10d', device_id=0, disable_validation=False, distributed_backend='nccl', distributed_init_method=None, distributed_no_spawn=False, distributed_port=-1, distributed_rank=0, distributed_world_size=1, dropout=0.1, empty_cache_freq=0, encoder_attention_heads=16, encoder_embed_dim=1024, encoder_ffn_embed_dim=4096, encoder_layerdrop=0, encoder_layers=24, encoder_layers_to_keep=None, end_learning_rate=0.0, fast_stat_sync=False, find_unused_parameters=True, fix_batches_to_gpus=False, fixed_validation_seed=None, force_anneal=None, fp16=True, fp16_init_scale=1, fp16_scale_tolerance=0.0, fp16_scale_window=None, gpt2_encoder_json='https://dl.fbaipublicfiles.com/fairseq/gpt2_bpe/encoder.json', gpt2_vocab_bpe='https://dl.fbaipublicfiles.com/fairseq/gpt2_bpe/vocab.bpe', init_token='<s>', inspect_data=False, keep_interval_updates=-1, keep_last_epochs=-1, log_format=None, log_interval=1000, lr=[1e-05], lr_scheduler='polynomial_decay', max_epoch=50, max_positions=128, max_sentences=4, max_sentences_valid=4, max_tokens=4400, max_tokens_valid=4400, max_update=0, maximize_best_checkpoint_metric=True, memory_efficient_fp16=False, min_loss_scale=0.0001, min_lr=-1, no_epoch_checkpoints=True, no_last_checkpoints=True, no_progress_bar=False, no_save=False, no_save_optimizer_state=True, no_shuffle=False, num_workers=1, optimizer='adam', optimizer_overrides='{}', patience=10, pooler_activation_fn='tanh', pooler_dropout=0.0, power=1.0, required_batch_size_multiple=4, reset_dataloader=True, reset_lr_scheduler=False, reset_meters=True, reset_optimizer=True, restore_file='checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1.pt', save_dir='checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50', save_interval=1, save_interval_updates=0, save_predictions=None, seed=9100, sentence_avg=False, separator_token='</s>', skip_invalid_size_inputs_valid_test=True, task='piqa', tensorboard_logdir='', threshold_loss_scale=None, tokenizer=None, total_num_update=25200, train_subset='train', truncate_sequence=False, update_freq=[8], use_bmuf=False, user_dir='../sempre', valid_subset='valid', validate_interval=1, warmup_updates=2520, weight_decay=0.1)
+| dictionary: 50264 types
+| init <s> (0) | sep </s> (2) 
+| sep is not used in this task
+| Loaded valid with 1838 samples
+RobertaModel(
+  (decoder): RobertaEncoder(
+    (sentence_encoder): TransformerSentenceEncoder(
+      (embed_tokens): Embedding(50264, 1024, padding_idx=1)
+      (embed_positions): LearnedPositionalEmbedding(130, 1024, padding_idx=1)
+      (layers): ModuleList(
+        (0): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (1): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (2): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (3): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (4): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (5): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (6): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (7): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (8): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (9): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (10): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (11): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (12): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (13): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (14): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (15): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (16): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (17): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (18): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (19): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (20): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (21): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (22): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+        (23): TransformerSentenceEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+          )
+          (self_attn_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+          (final_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+        )
+      )
+      (emb_layer_norm): FusedLayerNorm(torch.Size([1024]), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (classification_heads): ModuleDict(
+    (sentence_classification_head): RobertaClassificationHead(
+      (dense): Linear(in_features=1024, out_features=1024, bias=True)
+      (dropout): Dropout(p=0.0, inplace=False)
+      (out_proj): Linear(in_features=1024, out_features=1, bias=True)
+    )
+  )
+)
+| model roberta_large, criterion SentenceRankingCriterion
+| num. model params: 354965505 (num. trained: 354965505)
+| training on 1 GPUs
+| max tokens per GPU = 4400 and max sentences per GPU = 4
+WARNING: decoder.sentence_encoder.embed_tokens.weight size mismatch, truncate torch.Size([50272, 1024]) -> torch.Size([50264, 1024])
+WARNING: decoder.sentence_encoder.embed_positions.weight size mismatch, truncate torch.Size([136, 1024]) -> torch.Size([130, 1024])
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.dense.weight
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.dense.bias
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.out_proj.weight
+WARNING: deleting classification head (sentence_classification_head) from checkpoint with different dimensions than current model: classification_heads.sentence_classification_head.out_proj.bias
+WARNING: deleting lm head (decoder.lm_head.weight) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.bias) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.dense.weight) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.dense.bias) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.layer_norm.weight) from checkpoint
+WARNING: deleting lm head (decoder.lm_head.layer_norm.bias) from checkpoint
+Overwriting classification_heads.sentence_classification_head.dense.weight
+Overwriting classification_heads.sentence_classification_head.dense.bias
+Overwriting classification_heads.sentence_classification_head.out_proj.weight
+Overwriting classification_heads.sentence_classification_head.out_proj.bias
+| loaded checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1.pt (epoch 1 @ 0 updates)
+| loading train data for epoch 0
+| Loaded train with 16113 samples
+| WARNING: 189 samples have invalid sizes and will be skipped, max_positions=128, first few sample ids=[13647, 4124, 7833, 9001, 6880, 8099, 15935, 5910, 7484, 10073]
+| epoch 001 | loss 1.000 | nll_loss 0.030 | ppl 1.02 | wps 1167 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 498 | lr 1.97619e-06 | gnorm 5.573 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 454 | train_wall 439 | accuracy 0.505903
+| WARNING: 16 samples have invalid sizes and will be skipped, max_positions=128, first few sample ids=[1376, 476, 1569, 1694, 234, 702, 1433, 1717, 687, 314]
+| epoch 001 | valid on 'valid' subset | loss 0.997 | nll_loss 0.030 | ppl 1.02 | num_updates 498 | accuracy 0.601425
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 1 @ 498 updates) (writing took 0.4662948140030494 seconds)
+| epoch 002 | loss 0.952 | nll_loss 0.029 | ppl 1.02 | wps 1202 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 996 | lr 3.95238e-06 | gnorm 11.765 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 908 | train_wall 864 | accuracy 0.599472
+| epoch 002 | valid on 'valid' subset | loss 0.812 | nll_loss 0.024 | ppl 1.02 | num_updates 996 | best_accuracy 0.73136 | accuracy 0.73136
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 2 @ 996 updates) (writing took 3.6947337269957643 seconds)
+| epoch 003 | loss 0.838 | nll_loss 0.025 | ppl 1.02 | wps 1157 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 1494 | lr 5.92857e-06 | gnorm 31.977 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 1382 | train_wall 1307 | accuracy 0.689776
+| epoch 003 | valid on 'valid' subset | loss 0.739 | nll_loss 0.022 | ppl 1.02 | num_updates 1494 | best_accuracy 0.769189 | accuracy 0.769189
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 3 @ 1494 updates) (writing took 3.7693420959985815 seconds)
+| epoch 004 | loss 0.735 | nll_loss 0.022 | ppl 1.02 | wps 1184 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 1992 | lr 7.90476e-06 | gnorm 25.924 | clip 0.000 | oom 0.000 | loss_scale 1.000 | wall 1847 | train_wall 1739 | accuracy 0.742653
+| epoch 004 | valid on 'valid' subset | loss 0.704 | nll_loss 0.021 | ppl 1.01 | num_updates 1992 | best_accuracy 0.796601 | accuracy 0.796601
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 4 @ 1992 updates) (writing took 3.4853314140054863 seconds)
+| epoch 005 | loss 0.630 | nll_loss 0.019 | ppl 1.01 | wps 1168 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 2490 | lr 9.88095e-06 | gnorm 27.645 | clip 0.000 | oom 0.000 | loss_scale 2.000 | wall 2317 | train_wall 2177 | accuracy 0.788119
+| epoch 005 | valid on 'valid' subset | loss 0.684 | nll_loss 0.020 | ppl 1.01 | num_updates 2490 | best_accuracy 0.796601 | accuracy 0.792763
+| epoch 006 | loss 0.523 | nll_loss 0.016 | ppl 1.01 | wps 1155 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 2988 | lr 9.79365e-06 | gnorm 28.862 | clip 0.000 | oom 0.000 | loss_scale 2.000 | wall 2788 | train_wall 2620 | accuracy 0.834275
+| epoch 006 | valid on 'valid' subset | loss 0.700 | nll_loss 0.021 | ppl 1.01 | num_updates 2988 | best_accuracy 0.796601 | accuracy 0.782895
+| epoch 007 | loss 0.408 | nll_loss 0.012 | ppl 1.01 | wps 1183 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 3486 | lr 9.57407e-06 | gnorm 28.203 | clip 0.000 | oom 0.000 | loss_scale 2.000 | wall 3249 | train_wall 3052 | accuracy 0.874215
+| epoch 007 | valid on 'valid' subset | loss 0.833 | nll_loss 0.025 | ppl 1.02 | num_updates 3486 | best_accuracy 0.796601 | accuracy 0.782346
+| epoch 008 | loss 0.337 | nll_loss 0.010 | ppl 1.01 | wps 1150 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 3984 | lr 9.3545e-06 | gnorm 26.555 | clip 0.000 | oom 0.000 | loss_scale 2.000 | wall 3723 | train_wall 3498 | accuracy 0.900276
+| epoch 008 | valid on 'valid' subset | loss 0.751 | nll_loss 0.022 | ppl 1.02 | num_updates 3984 | best_accuracy 0.802632 | accuracy 0.802632
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 8 @ 3984 updates) (writing took 3.4177597620000597 seconds)
+| epoch 009 | loss 0.273 | nll_loss 0.008 | ppl 1.01 | wps 1173 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 4482 | lr 9.13492e-06 | gnorm 26.541 | clip 0.000 | oom 0.000 | loss_scale 4.000 | wall 4191 | train_wall 3934 | accuracy 0.919681
+| epoch 009 | valid on 'valid' subset | loss 0.922 | nll_loss 0.028 | ppl 1.02 | num_updates 4482 | best_accuracy 0.802632 | accuracy 0.792215
+| epoch 010 | loss 0.228 | nll_loss 0.007 | ppl 1 | wps 1137 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 4980 | lr 8.91534e-06 | gnorm 23.338 | clip 0.000 | oom 0.000 | loss_scale 4.000 | wall 4669 | train_wall 4385 | accuracy 0.935632
+| epoch 010 | valid on 'valid' subset | loss 0.972 | nll_loss 0.029 | ppl 1.02 | num_updates 4980 | best_accuracy 0.802632 | accuracy 0.799342
+| epoch 011 | loss 0.185 | nll_loss 0.006 | ppl 1 | wps 1184 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 5478 | lr 8.69577e-06 | gnorm 23.703 | clip 0.000 | oom 0.000 | loss_scale 4.000 | wall 5130 | train_wall 4817 | accuracy 0.947752
+| epoch 011 | valid on 'valid' subset | loss 0.916 | nll_loss 0.027 | ppl 1.02 | num_updates 5478 | best_accuracy 0.80318 | accuracy 0.80318
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 11 @ 5478 updates) (writing took 3.5177490929927444 seconds)
+| epoch 012 | loss 0.154 | nll_loss 0.005 | ppl 1 | wps 1173 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 5976 | lr 8.47619e-06 | gnorm 21.525 | clip 0.000 | oom 0.000 | loss_scale 4.000 | wall 5598 | train_wall 5253 | accuracy 0.95736
+| epoch 012 | valid on 'valid' subset | loss 0.947 | nll_loss 0.028 | ppl 1.02 | num_updates 5976 | best_accuracy 0.80318 | accuracy 0.797697
+| epoch 013 | loss 0.132 | nll_loss 0.004 | ppl 1 | wps 1179 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 6474 | lr 8.25661e-06 | gnorm 19.919 | clip 0.000 | oom 0.000 | loss_scale 8.000 | wall 6060 | train_wall 5687 | accuracy 0.964959
+| epoch 013 | valid on 'valid' subset | loss 1.087 | nll_loss 0.032 | ppl 1.02 | num_updates 6474 | best_accuracy 0.805921 | accuracy 0.805921
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 13 @ 6474 updates) (writing took 3.451370077993488 seconds)
+| epoch 014 | loss 0.121 | nll_loss 0.004 | ppl 1 | wps 1150 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 6972 | lr 8.03704e-06 | gnorm 19.197 | clip 0.000 | oom 0.000 | loss_scale 8.000 | wall 6537 | train_wall 6132 | accuracy 0.967596
+| epoch 014 | valid on 'valid' subset | loss 1.080 | nll_loss 0.032 | ppl 1.02 | num_updates 6972 | best_accuracy 0.805921 | accuracy 0.801535
+| epoch 015 | loss 0.102 | nll_loss 0.003 | ppl 1 | wps 1177 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 7470 | lr 7.81746e-06 | gnorm 18.495 | clip 0.000 | oom 0.000 | loss_scale 8.000 | wall 7000 | train_wall 6567 | accuracy 0.973122
+| epoch 015 | valid on 'valid' subset | loss 1.248 | nll_loss 0.037 | ppl 1.03 | num_updates 7470 | best_accuracy 0.805921 | accuracy 0.800987
+| epoch 016 | loss 0.095 | nll_loss 0.003 | ppl 1 | wps 1139 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 7968 | lr 7.59788e-06 | gnorm 18.424 | clip 0.000 | oom 0.000 | loss_scale 8.000 | wall 7478 | train_wall 7017 | accuracy 0.976325
+| epoch 016 | valid on 'valid' subset | loss 1.293 | nll_loss 0.039 | ppl 1.03 | num_updates 7968 | best_accuracy 0.806469 | accuracy 0.806469
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 16 @ 7968 updates) (writing took 3.312416277010925 seconds)
+| epoch 017 | loss 0.081 | nll_loss 0.002 | ppl 1 | wps 1154 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 8466 | lr 7.37831e-06 | gnorm 17.784 | clip 0.000 | oom 0.000 | loss_scale 16.000 | wall 7953 | train_wall 7460 | accuracy 0.978335
+| epoch 017 | valid on 'valid' subset | loss 1.335 | nll_loss 0.040 | ppl 1.03 | num_updates 8466 | best_accuracy 0.806469 | accuracy 0.805373
+| epoch 018 | loss 0.074 | nll_loss 0.002 | ppl 1 | wps 1167 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 8964 | lr 7.15873e-06 | gnorm 16.163 | clip 0.000 | oom 0.000 | loss_scale 16.000 | wall 8420 | train_wall 7899 | accuracy 0.980156
+| epoch 018 | valid on 'valid' subset | loss 1.397 | nll_loss 0.042 | ppl 1.03 | num_updates 8964 | best_accuracy 0.806469 | accuracy 0.804276
+| epoch 019 | loss 0.065 | nll_loss 0.002 | ppl 1 | wps 1151 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 9462 | lr 6.93915e-06 | gnorm 15.863 | clip 0.000 | oom 0.000 | loss_scale 16.000 | wall 8893 | train_wall 8344 | accuracy 0.982542
+| epoch 019 | valid on 'valid' subset | loss 1.424 | nll_loss 0.043 | ppl 1.03 | num_updates 9462 | best_accuracy 0.806469 | accuracy 0.793311
+| epoch 020 | loss 0.060 | nll_loss 0.002 | ppl 1 | wps 1132 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 9960 | lr 6.71958e-06 | gnorm 14.693 | clip 0.000 | oom 0.000 | loss_scale 16.000 | wall 9373 | train_wall 8796 | accuracy 0.984866
+| epoch 020 | valid on 'valid' subset | loss 1.385 | nll_loss 0.041 | ppl 1.03 | num_updates 9960 | best_accuracy 0.806469 | accuracy 0.803728
+| epoch 021 | loss 0.051 | nll_loss 0.002 | ppl 1 | wps 1174 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 10458 | lr 6.5e-06 | gnorm 13.548 | clip 0.000 | oom 0.000 | loss_scale 32.000 | wall 9837 | train_wall 9232 | accuracy 0.987754
+| epoch 021 | valid on 'valid' subset | loss 1.442 | nll_loss 0.043 | ppl 1.03 | num_updates 10458 | best_accuracy 0.806469 | accuracy 0.797697
+| epoch 022 | loss 0.046 | nll_loss 0.001 | ppl 1 | wps 1179 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 10956 | lr 6.28042e-06 | gnorm 12.477 | clip 0.000 | oom 0.000 | loss_scale 32.000 | wall 10299 | train_wall 9666 | accuracy 0.988508
+| epoch 022 | valid on 'valid' subset | loss 1.530 | nll_loss 0.046 | ppl 1.03 | num_updates 10956 | best_accuracy 0.806469 | accuracy 0.804276
+| epoch 023 | loss 0.044 | nll_loss 0.001 | ppl 1 | wps 1173 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 11454 | lr 6.06085e-06 | gnorm 12.658 | clip 0.000 | oom 0.000 | loss_scale 32.000 | wall 10764 | train_wall 10103 | accuracy 0.988194
+| epoch 023 | valid on 'valid' subset | loss 1.654 | nll_loss 0.049 | ppl 1.03 | num_updates 11454 | best_accuracy 0.806469 | accuracy 0.804276
+| epoch 024 | loss 0.038 | nll_loss 0.001 | ppl 1 | wps 1193 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 11952 | lr 5.84127e-06 | gnorm 11.547 | clip 0.000 | oom 0.000 | loss_scale 32.000 | wall 11221 | train_wall 10532 | accuracy 0.990203
+| epoch 024 | valid on 'valid' subset | loss 1.571 | nll_loss 0.047 | ppl 1.03 | num_updates 11952 | best_accuracy 0.806469 | accuracy 0.805921
+| epoch 025 | loss 0.038 | nll_loss 0.001 | ppl 1 | wps 1153 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 12450 | lr 5.62169e-06 | gnorm 10.781 | clip 0.000 | oom 0.000 | loss_scale 64.000 | wall 11693 | train_wall 10976 | accuracy 0.99102
+| epoch 025 | valid on 'valid' subset | loss 1.592 | nll_loss 0.048 | ppl 1.03 | num_updates 12450 | best_accuracy 0.807566 | accuracy 0.807566
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 25 @ 12450 updates) (writing took 3.952287113002967 seconds)
+| epoch 026 | loss 0.030 | nll_loss 0.001 | ppl 1 | wps 1135 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 12948 | lr 5.40212e-06 | gnorm 9.968 | clip 0.000 | oom 0.000 | loss_scale 64.000 | wall 12176 | train_wall 11428 | accuracy 0.992087
+| epoch 026 | valid on 'valid' subset | loss 1.508 | nll_loss 0.045 | ppl 1.03 | num_updates 12948 | best_accuracy 0.808114 | accuracy 0.808114
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 26 @ 12948 updates) (writing took 3.4903370040119626 seconds)
+| epoch 027 | loss 0.032 | nll_loss 0.001 | ppl 1 | wps 1197 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 13446 | lr 5.18254e-06 | gnorm 10.057 | clip 0.000 | oom 0.000 | loss_scale 64.000 | wall 12635 | train_wall 11855 | accuracy 0.991522
+| epoch 027 | valid on 'valid' subset | loss 1.481 | nll_loss 0.044 | ppl 1.03 | num_updates 13446 | best_accuracy 0.808114 | accuracy 0.806469
+| epoch 028 | loss 0.024 | nll_loss 0.001 | ppl 1 | wps 1143 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 13944 | lr 4.96296e-06 | gnorm 8.173 | clip 0.000 | oom 0.000 | loss_scale 64.000 | wall 13111 | train_wall 12303 | accuracy 0.99416
+| epoch 028 | valid on 'valid' subset | loss 1.691 | nll_loss 0.051 | ppl 1.04 | num_updates 13944 | best_accuracy 0.808114 | accuracy 0.808114
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 28 @ 13944 updates) (writing took 3.7056062500050757 seconds)
+| epoch 029 | loss 0.024 | nll_loss 0.001 | ppl 1 | wps 1175 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 14442 | lr 4.74339e-06 | gnorm 7.916 | clip 0.000 | oom 0.000 | loss_scale 128.000 | wall 13578 | train_wall 12739 | accuracy 0.994348
+| epoch 029 | valid on 'valid' subset | loss 1.468 | nll_loss 0.044 | ppl 1.03 | num_updates 14442 | best_accuracy 0.813048 | accuracy 0.813048
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 29 @ 14442 updates) (writing took 3.527380179002648 seconds)
+| epoch 030 | loss 0.024 | nll_loss 0.001 | ppl 1 | wps 1156 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 14940 | lr 4.52381e-06 | gnorm 7.582 | clip 0.000 | oom 0.000 | loss_scale 128.000 | wall 14053 | train_wall 13182 | accuracy 0.994913
+| epoch 030 | valid on 'valid' subset | loss 1.542 | nll_loss 0.046 | ppl 1.03 | num_updates 14940 | best_accuracy 0.813048 | accuracy 0.800439
+| epoch 031 | loss 0.020 | nll_loss 0.001 | ppl 1 | wps 1190 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 15438 | lr 4.30423e-06 | gnorm 7.213 | clip 0.000 | oom 0.000 | loss_scale 128.000 | wall 14511 | train_wall 13612 | accuracy 0.995353
+| epoch 031 | valid on 'valid' subset | loss 1.632 | nll_loss 0.049 | ppl 1.03 | num_updates 15438 | best_accuracy 0.813048 | accuracy 0.802632
+| epoch 032 | loss 0.019 | nll_loss 0.001 | ppl 1 | wps 1161 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 15936 | lr 4.08466e-06 | gnorm 6.818 | clip 0.000 | oom 0.000 | loss_scale 128.000 | wall 14981 | train_wall 14053 | accuracy 0.99573
+| epoch 032 | valid on 'valid' subset | loss 1.487 | nll_loss 0.044 | ppl 1.03 | num_updates 15936 | best_accuracy 0.813048 | accuracy 0.803728
+| epoch 033 | loss 0.019 | nll_loss 0.001 | ppl 1 | wps 1191 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 16434 | lr 3.86508e-06 | gnorm 6.592 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 15439 | train_wall 14483 | accuracy 0.996107
+| epoch 033 | valid on 'valid' subset | loss 1.671 | nll_loss 0.050 | ppl 1.04 | num_updates 16434 | best_accuracy 0.813048 | accuracy 0.802083
+| epoch 034 | loss 0.016 | nll_loss 0.000 | ppl 1 | wps 1152 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 16932 | lr 3.6455e-06 | gnorm 5.983 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 15911 | train_wall 14927 | accuracy 0.996358
+| epoch 034 | valid on 'valid' subset | loss 1.678 | nll_loss 0.050 | ppl 1.04 | num_updates 16932 | best_accuracy 0.813048 | accuracy 0.800987
+| epoch 035 | loss 0.016 | nll_loss 0.000 | ppl 1 | wps 1166 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 17430 | lr 3.42593e-06 | gnorm 6.049 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 16378 | train_wall 15366 | accuracy 0.996358
+| epoch 035 | valid on 'valid' subset | loss 1.812 | nll_loss 0.054 | ppl 1.04 | num_updates 17430 | best_accuracy 0.813048 | accuracy 0.804276
+| epoch 036 | loss 0.011 | nll_loss 0.000 | ppl 1 | wps 1160 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 17928 | lr 3.20635e-06 | gnorm 4.715 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 16848 | train_wall 15807 | accuracy 0.998053
+| epoch 036 | valid on 'valid' subset | loss 1.751 | nll_loss 0.052 | ppl 1.04 | num_updates 17928 | best_accuracy 0.816338 | accuracy 0.816338
+| saved checkpoint checkpoints/roberta.large/model/batchsize2048-seed1234/checkpoint1/PIQA-batchsize32-lr1e-5-seed9100-me50/checkpoint_best.pt (epoch 36 @ 17928 updates) (writing took 3.315408299997216 seconds)
+| epoch 037 | loss 0.011 | nll_loss 0.000 | ppl 1 | wps 1200 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 18426 | lr 2.98677e-06 | gnorm 4.857 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 17305 | train_wall 16233 | accuracy 0.997174
+| epoch 037 | valid on 'valid' subset | loss 1.858 | nll_loss 0.055 | ppl 1.04 | num_updates 18426 | best_accuracy 0.816338 | accuracy 0.808114
+| epoch 038 | loss 0.010 | nll_loss 0.000 | ppl 1 | wps 1121 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 18924 | lr 2.7672e-06 | gnorm 4.618 | clip 0.000 | oom 0.000 | loss_scale 512.000 | wall 17790 | train_wall 16691 | accuracy 0.997362
+| epoch 038 | valid on 'valid' subset | loss 1.860 | nll_loss 0.056 | ppl 1.04 | num_updates 18924 | best_accuracy 0.816338 | accuracy 0.806469
+| WARNING: overflow detected, setting loss scale to: 256.0
+| epoch 039 | loss 0.011 | nll_loss 0.000 | ppl 1 | wps 1143 | ups 1 | wpb 1054.485 | bsz 31.976 | num_updates 19421 | lr 2.54806e-06 | gnorm 4.643 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 18265 | train_wall 17137 | accuracy 0.997105
+| epoch 039 | valid on 'valid' subset | loss 1.761 | nll_loss 0.053 | ppl 1.04 | num_updates 19421 | best_accuracy 0.816338 | accuracy 0.809211
+| epoch 040 | loss 0.010 | nll_loss 0.000 | ppl 1 | wps 1154 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 19919 | lr 2.32848e-06 | gnorm 4.115 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 18737 | train_wall 17581 | accuracy 0.99799
+| epoch 040 | valid on 'valid' subset | loss 1.811 | nll_loss 0.054 | ppl 1.04 | num_updates 19919 | best_accuracy 0.816338 | accuracy 0.808662
+| epoch 041 | loss 0.010 | nll_loss 0.000 | ppl 1 | wps 1157 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 20417 | lr 2.10891e-06 | gnorm 4.494 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 19207 | train_wall 18024 | accuracy 0.9973
+| epoch 041 | valid on 'valid' subset | loss 1.786 | nll_loss 0.053 | ppl 1.04 | num_updates 20417 | best_accuracy 0.816338 | accuracy 0.8125
+| epoch 042 | loss 0.008 | nll_loss 0.000 | ppl 1 | wps 1173 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 20915 | lr 1.88933e-06 | gnorm 3.382 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 19671 | train_wall 18460 | accuracy 0.998493
+| epoch 042 | valid on 'valid' subset | loss 1.894 | nll_loss 0.057 | ppl 1.04 | num_updates 20915 | best_accuracy 0.816338 | accuracy 0.809759
+| epoch 043 | loss 0.008 | nll_loss 0.000 | ppl 1 | wps 1205 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 21413 | lr 1.66975e-06 | gnorm 4.115 | clip 0.000 | oom 0.000 | loss_scale 512.000 | wall 20124 | train_wall 18884 | accuracy 0.998053
+| epoch 043 | valid on 'valid' subset | loss 1.807 | nll_loss 0.054 | ppl 1.04 | num_updates 21413 | best_accuracy 0.816338 | accuracy 0.810307
+| epoch 044 | loss 0.008 | nll_loss 0.000 | ppl 1 | wps 1169 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 21911 | lr 1.45018e-06 | gnorm 3.233 | clip 0.000 | oom 0.000 | loss_scale 512.000 | wall 20590 | train_wall 19322 | accuracy 0.998053
+| epoch 044 | valid on 'valid' subset | loss 1.799 | nll_loss 0.054 | ppl 1.04 | num_updates 21911 | best_accuracy 0.816338 | accuracy 0.813596
+| epoch 045 | loss 0.007 | nll_loss 0.000 | ppl 1 | wps 1177 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 22409 | lr 1.2306e-06 | gnorm 3.318 | clip 0.000 | oom 0.000 | loss_scale 512.000 | wall 21053 | train_wall 19757 | accuracy 0.998367
+| epoch 045 | valid on 'valid' subset | loss 1.864 | nll_loss 0.056 | ppl 1.04 | num_updates 22409 | best_accuracy 0.816338 | accuracy 0.811952
+| epoch 046 | loss 0.006 | nll_loss 0.000 | ppl 1 | wps 1174 | ups 1 | wpb 1054.801 | bsz 31.976 | num_updates 22907 | lr 1.01102e-06 | gnorm 2.973 | clip 0.000 | oom 0.000 | loss_scale 512.000 | wall 21517 | train_wall 20193 | accuracy 0.998618
+| epoch 046 | valid on 'valid' subset | loss 1.957 | nll_loss 0.058 | ppl 1.04 | num_updates 22907 | best_accuracy 0.816338 | accuracy 0.805921
+| WARNING: overflow detected, setting loss scale to: 256.0
+| epoch 047 | loss 0.006 | nll_loss 0.000 | ppl 1 | wps 1165 | ups 1 | wpb 1054.920 | bsz 31.976 | num_updates 23404 | lr 7.91887e-07 | gnorm 2.666 | clip 0.000 | oom 0.000 | loss_scale 256.000 | wall 21984 | train_wall 20631 | accuracy 0.998679
+| epoch 047 | valid on 'valid' subset | loss 1.927 | nll_loss 0.058 | ppl 1.04 | num_updates 23404 | best_accuracy 0.816338 | accuracy 0.805921
+| early stop since valid performance hasn't improved for last 10 runs
+| done training in 21996.9 seconds
